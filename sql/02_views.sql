@@ -258,7 +258,8 @@ exits AS (
         c.*,
         e.stop_ts,
         e.target_ts,
-        e.time_ts
+        e.time_ts,
+        e.last_ts
     FROM candidates c
     LEFT JOIN LATERAL (
         SELECT
@@ -272,7 +273,8 @@ exits AS (
             ) AS target_ts,
             min(b.ts) FILTER (
                 WHERE (b.ts AT TIME ZONE 'America/New_York')::time >= TIME '16:00'
-            ) AS time_ts
+            ) AS time_ts,
+            max(b.ts) AS last_ts
         FROM nq.bars_1m b
         WHERE b.symbol = c.symbol
           AND b.session_date = c.session_date
@@ -287,7 +289,7 @@ joined AS (
     FROM exits x
     LEFT JOIN nq.bars_1m t
       ON t.symbol = x.symbol
-     AND t.ts = x.time_ts
+     AND t.ts = coalesce(x.time_ts, x.last_ts)
 ),
 decided AS (
     SELECT
@@ -302,7 +304,7 @@ decided AS (
             WHEN stop_ts IS NOT NULL
              AND (target_ts IS NULL OR stop_ts <= target_ts) THEN stop_ts
             WHEN target_ts IS NOT NULL THEN target_ts
-            ELSE time_ts
+            ELSE coalesce(time_ts, last_ts)
         END AS exit_ts
     FROM joined
 ),

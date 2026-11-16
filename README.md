@@ -78,14 +78,14 @@ From the full 2017-04-02 through 2026-10-23 load:
 | London ranges | 2,462 |
 | First breaks | 2,347 |
 | Range-capped trades | 1,869 |
-| Win rate | 36.92% |
-| Net P&L | **+$85,592.40** |
-| Gross P&L | +$87,905.00 |
+| Win rate | 37.03% |
+| Net P&L | **+$85,567.44** |
+| Gross P&L | +$87,885.00 |
 | Profit factor | 1.137 |
-| Expectancy per trade | $45.80 |
-| Average R | 0.0882 |
+| Expectancy per trade | $45.78 |
+| Average R | 0.0880 |
 | Average risk | $548.44 |
-| Average hold | 44.9 minutes |
+| Average hold | 45.2 minutes |
 | Long / short trades | 1,003 / 866 |
 | Target / stop / time exits | 650 / 1,155 / 64 |
 
@@ -163,7 +163,11 @@ The loader:
 
 A full load took about a minute on the local Windows machine. The 5-minute
 materialized view is built once; subsequent queries do not rescan 3.3 million
-rows through a window function.
+rows through a window function. Run the data-contract checks after loading:
+
+```powershell
+& $psql -h 127.0.0.1 -p 55433 -U postgres -d nq_research -f sql/03_assertions.sql
+```
 
 ### 4. Run the portfolio queries
 
@@ -232,6 +236,7 @@ nq_market_postgres/
   sql/
     01_schema.sql          # base table, constraints, indexes
     02_views.sql           # materialized analytical views
+    03_assertions.sql      # OHLC, duplicate-key, risk and exit-contract checks
   queries/
     01_data_quality.sql
     02_london_range_stats.sql
