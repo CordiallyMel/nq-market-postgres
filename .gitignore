@@ -1,0 +1,9 @@
+.pgdata/
+.venv/
+__pycache__/
+*.pyc
+.env
+nq_load_*.csv
+data/nq_load.csv
+data/*.parquet
+results/*.err

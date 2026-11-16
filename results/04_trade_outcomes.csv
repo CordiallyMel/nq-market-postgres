@@ -1,0 +1,4 @@
+side,trades,wins,win_rate_pct,targets,stops,time_exits,net_pnl,gross_pnl,expectancy_per_trade,avg_r,avg_risk_dollars,avg_hold_minutes,profit_factor,net_rank
+long,1003,378,37.69,355,615,33,64341.28,65585.00,64.15,0.1101,519.98,44.9,1.207,2
+short,866,312,36.03,295,540,31,21251.12,22320.00,24.54,0.0628,581.41,44.8,1.067,3
+ALL,1869,690,36.92,650,1155,64,85592.40,87905.00,45.80,0.0882,548.44,44.9,1.137,1

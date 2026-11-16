@@ -1,0 +1,2 @@
+rows,sessions,rth_bars,first_ts,last_ts,gaps_over_1m,gaps_over_5m,max_gap_minutes,avg_gap_minutes,duplicate_keys
+3350033,2974,944132,2017-04-02 18:00:00-04,2026-10-23 16:59:00-04,11552,3731,4606.0,146.17,0
